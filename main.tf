@@ -1,22 +1,20 @@
-provider "aws" {
-  region = var.aws_region
-}
+module "ec2_instance" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 3.0"
 
-# Create AWS ec2 instance
-resource "aws_instance" "myFirstInstance" {
-  ami           = var.ami_id
-  key_name = var.key_name
-  instance_type = var.instance_type
-  tags= {
-    Name = var.tag_name
-  }
-}
+  for_each = toset(["one", "two", "three"])
 
-# Create Elastic IP address
-resource "aws_eip" "myFirstInstance" {
-  vpc      = true
-  instance = aws_instance.myFirstInstance.id
-tags= {
-    Name = "my_elastic_ip"
+  name = "instance-${each.key}"
+
+  ami                    = "ami-0c1a7f89451184c8b"
+  instance_type          = "t2.micro"
+  key_name               = "3385"
+  monitoring             = true
+  vpc_security_group_ids = ["sg-0b6e8e9e9cbaaee47"]
+  subnet_id              = "subnet-0eeed9c4540bc3568"
+
+  tags = {
+    Terraform   = "true"
+    Environment = "dev"
   }
 }
