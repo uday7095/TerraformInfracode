@@ -3,6 +3,11 @@ variable "aws_region" {
   default     = "ap-south-1"
 }
 
+variable "subnet_prv1" {
+  description = "Private Subnet 1"
+  default = "subnet-0284d35b71c7cc0b7"
+}
+
 variable "key_name" {
   description = " SSH keys to connect to ec2 instance"
   default     =  "3385"
