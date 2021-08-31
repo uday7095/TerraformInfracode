@@ -3,11 +3,6 @@ variable "aws_region" {
   default     = "ap-south-1"
 }
 
-variable "vpc_id" {
-  description = " SSH keys to connect to ec2 instance"
-  default     =  "vpc-0caa99107d3ccdb99"
-}
-
 variable "key_name" {
   description = " SSH keys to connect to ec2 instance"
   default     =  "3385"
@@ -30,5 +25,5 @@ variable "tag_name" {
 
 variable "ami_id" {
   description = "AMI for Ubuntu Ec2 instance"
-  default     = "ami-0c1a7f89451184c8b"
+  default     = " ami-0c1a7f89451184c8b"
 }
