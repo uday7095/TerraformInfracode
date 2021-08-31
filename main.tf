@@ -1,55 +1,27 @@
 provider "aws" {
-  region = var.aws_region
+  profile    = "default"
+  region     = var.region
 }
 
-#Create security group with firewall rules
-resource "aws_security_group" "my_security_group" {
-  name        = var.security_group
-  description = "security group for Ec2 instance"
+resource "aws_instance" "WindowsBox" {
+  ami           = "ami-0c1a7f89451184c8b"
+  instance_type = "t2.medium"
+  key_name = aws_key_pair.keypair.key_name
 
-  ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  subnet_id = "subnet-0284d35b71c7cc0b7"
+  vpc_security_group_ids = ["sg-0b6e8e9e9cbaaee47"]
 
- ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
- # outbound from jenkis server
-  egress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags= {
-    Name = var.security_group
+  tags = {
+    Name ="WindowsBox"
   }
 }
 
-# Create AWS ec2 instance
-resource "aws_instance" "myFirstInstance" {
-  ami           = var.ami_id
-  key_name = var.key_name
-  instance_type = var.instance_type
-  security_groups= [var.security_group]
-  tags= {
-    Name = var.tag_name
-  }
+resource "aws_eip" "ip" {
+    vpc = true
+    instance = aws_instance.WindowsBox.id
 }
 
-# Create Elastic IP address
-resource "aws_eip" "myFirstInstance" {
-  vpc      = true
-  instance = aws_instance.myFirstInstance.id
-tags= {
-    Name = "my_elastic_ip"
-  }
+resource "aws_key_pair" "keypair" {
+  key_name = "WindowsBox-keypair"
+  public_key = file("./kp/WindowsBox-keypair.pub")
 }
