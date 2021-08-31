@@ -40,7 +40,6 @@ resource "aws_instance" "myFirstInstance" {
   key_name = var.key_name
   instance_type = var.instance_type
   security_groups= [var.security_group]
-  vpc_id         = [var.vpc_id]
   tags= {
     Name = var.tag_name
   }
