@@ -5,7 +5,6 @@ provider "aws" {
 #Create security group with firewall rules
 resource "aws_security_group" "my_security_group" {
   name        = var.security_group
-  vpc         = var.vpc_id
   description = "security group for Ec2 instance"
 
   ingress {
@@ -41,7 +40,7 @@ resource "aws_instance" "myFirstInstance" {
   key_name = var.key_name
   instance_type = var.instance_type
   security_groups= [var.security_group]
-  vpc_id         = [var.vpc_id}
+  vpc_id         = [var.vpc_id]
   tags= {
     Name = var.tag_name
   }
