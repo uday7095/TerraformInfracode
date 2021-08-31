@@ -3,6 +3,11 @@ variable "aws_region" {
   default     = "ap-south-1"
 }
 
+variable "VpcId" {
+  description = " SSH keys to connect to ec2 instance"
+  default     =  "vpc-0caa99107d3ccdb99"
+}
+
 variable "key_name" {
   description = " SSH keys to connect to ec2 instance"
   default     =  "3385"
