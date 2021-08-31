@@ -1,4 +1,5 @@
 module "ec2_instance" {
+  region = var.aws_region
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 3.0"
 
@@ -7,7 +8,6 @@ module "ec2_instance" {
   name = "instance-${each.key}"
 
   ami                    = "ami-0c1a7f89451184c8b"
-  region                 = "ap-south-1"
   instance_type          = "t2.micro"
   key_name               = "3385"
   monitoring             = true
